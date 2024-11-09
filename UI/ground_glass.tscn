@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://dcvp61ikdaogm"]
+
+[ext_resource type="Shader" path="res://shaders/ground_glass.gdshader" id="1_81fti"]
+[ext_resource type="Script" path="res://UI/ground_glass.gd" id="1_hyfsq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kfu63"]
+shader = ExtResource("1_81fti")
+shader_parameter/lod = 0.0
+
+[node name="GroundGlass" type="CanvasLayer"]
+process_mode = 3
+layer = 5
+script = ExtResource("1_hyfsq")
+
+[node name="Panel" type="Panel" parent="."]
+material = SubResource("ShaderMaterial_kfu63")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

@@ -13,3 +13,12 @@ config_version=5
 config/name="笔记软件"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+UiTool="*res://scripts/global/ui_tool.gd"
+GroundGlass="*res://UI/ground_glass.tscn"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/Todo_Manager/plugin.cfg")
