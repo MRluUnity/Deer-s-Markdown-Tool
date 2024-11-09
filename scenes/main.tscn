@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://41rckbrcarwp"]
+[gd_scene load_steps=4 format=3 uid="uid://41rckbrcarwp"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_4k8lh"]
+[ext_resource type="Script" path="res://scenes/header_panel_container.gd" id="2_rh7kv"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mmuo8"]
 bg_color = Color(1, 1, 1, 1)
@@ -34,6 +35,7 @@ layout_mode = 2
 [node name="HeaderPanelContainer" type="PanelContainer" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+script = ExtResource("2_rh7kv")
 
 [node name="MarginContainer" type="MarginContainer" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer"]
 layout_mode = 2
@@ -54,10 +56,14 @@ theme_override_colors/font_pressed_color = Color(0.525101, 0.525101, 0.525101, 1
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 text = "文件"
 switch_on_hover = true
-item_count = 2
+item_count = 4
 popup/item_0/text = "新建"
 popup/item_1/text = "打开"
 popup/item_1/id = 1
+popup/item_2/id = 3
+popup/item_2/separator = true
+popup/item_3/text = "退出"
+popup/item_3/id = 2
 
 [node name="HelpMenuButton" type="MenuButton" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer/MarginContainer/HBoxContainer"]
 unique_name_in_owner = true
