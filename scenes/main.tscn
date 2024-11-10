@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://41rckbrcarwp"]
+[gd_scene load_steps=5 format=3 uid="uid://41rckbrcarwp"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_4k8lh"]
 [ext_resource type="Script" path="res://scenes/header_panel_container.gd" id="2_rh7kv"]
+[ext_resource type="Script" path="res://scenes/context_panel_container.gd" id="3_r0l5q"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mmuo8"]
 bg_color = Color(1, 1, 1, 1)
@@ -94,13 +95,32 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="SliderPanelContainer" type="PanelContainer" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer"]
-custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
-size_flags_horizontal = 0
+size_flags_horizontal = 2
 
 [node name="ContextPanelContainer" type="PanelContainer" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+script = ExtResource("3_r0l5q")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="TextEdit" type="TextEdit" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(800, 0)
+layout_mode = 2
+
+[node name="ContextText" type="VBoxContainer" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(800, 0)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/MarginContainer/HBoxContainer/ContextText"]
+layout_mode = 2
 
 [node name="UI_EX" type="CanvasLayer" parent="."]
 
@@ -110,3 +130,4 @@ size_flags_horizontal = 3
 [connection signal="pressed" from="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer/MarginContainer/HBoxContainer/FileMenuButton" to="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer" method="_on_file_menu_button_pressed"]
 [connection signal="about_to_popup" from="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer/MarginContainer/HBoxContainer/HelpMenuButton" to="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer" method="_on_help_menu_button_about_to_popup"]
 [connection signal="pressed" from="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer/MarginContainer/HBoxContainer/HelpMenuButton" to="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer" method="_on_help_menu_button_pressed"]
+[connection signal="lines_edited_from" from="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/MarginContainer/HBoxContainer/TextEdit" to="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer" method="_on_text_edit_lines_edited_from"]
