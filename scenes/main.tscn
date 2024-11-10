@@ -105,3 +105,8 @@ size_flags_horizontal = 3
 [node name="UI_EX" type="CanvasLayer" parent="."]
 
 [node name="UI_Window" type="Node2D" parent="."]
+
+[connection signal="about_to_popup" from="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer/MarginContainer/HBoxContainer/FileMenuButton" to="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer" method="_on_file_menu_button_about_to_popup"]
+[connection signal="pressed" from="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer/MarginContainer/HBoxContainer/FileMenuButton" to="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer" method="_on_file_menu_button_pressed"]
+[connection signal="about_to_popup" from="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer/MarginContainer/HBoxContainer/HelpMenuButton" to="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer" method="_on_help_menu_button_about_to_popup"]
+[connection signal="pressed" from="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer/MarginContainer/HBoxContainer/HelpMenuButton" to="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer" method="_on_help_menu_button_pressed"]

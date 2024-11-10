@@ -11,15 +11,11 @@ config_version=5
 [application]
 
 config/name="笔记软件"
+config/tags=PackedStringArray("application", "project")
 run/main_scene="res://scenes/main.tscn"
 run/enable_alt_space_menu=true
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
-
-[autoload]
-
-UiTool="*res://scripts/global/ui_tool.gd"
-GroundGlass="*res://UI/ground_glass.tscn"
 
 [display]
 
