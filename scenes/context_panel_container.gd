@@ -54,47 +54,10 @@ func _on_text_edit_lines_edited_from(from_line: int, to_line: int) -> void:
 	for i in edit_texts:
 		var texture_label : RichTextLabel = RichTextLabel.new()
 		var text : String = i
-		var bold_text : String = ""
-		var is_bold : bool = false
-		var star_number : int = 0
 
-		if i.begins_with("#"):
-			if i.begins_with("##### "):
-				texture_label.add_theme_font_size_override("normal_font_size", 24)
-				texture_label.add_theme_font_size_override("bold_font_size", 24)
-				text = i.erase(0, 6)
-			elif i.begins_with("#### "):
-				texture_label.add_theme_font_size_override("normal_font_size", 36)
-				texture_label.add_theme_font_size_override("bold_font_size", 36)
-				text = i.erase(0, 5)
-			elif i.begins_with("### "):
-				texture_label.add_theme_font_size_override("normal_font_size", 48)
-				texture_label.add_theme_font_size_override("bold_font_size", 48)
-				text = i.erase(0, 4)
-			elif i.begins_with("## "):
-				texture_label.add_theme_font_size_override("normal_font_size", 60)
-				texture_label.add_theme_font_size_override("bold_font_size", 60)
-				text = i.erase(0, 3)
-			elif i.begins_with("# "):
-				texture_label.add_theme_font_size_override("normal_font_size", 72)
-				texture_label.add_theme_font_size_override("bold_font_size", 72)
-				text = i.erase(0, 2)
+		text = process_title(i, texture_label)
 
-		for char in text:
-			if char == "*":
-				star_number += 1
-				if star_number == 2 and is_bold:
-					bold_text += "[/b]"
-					is_bold = false
-				elif star_number == 2 and not is_bold:
-					bold_text += "[b]"
-					is_bold = true
-				continue
-			else :
-				star_number = 0
-
-			bold_text += char
-			text = bold_text
+		text = process_bold(text)
 
 		context_text.add_child(texture_label)
 		texture_label.fit_content = true
@@ -104,5 +67,51 @@ func _on_text_edit_lines_edited_from(from_line: int, to_line: int) -> void:
 
 # TODO 内容UI ===============>工具方法<===============
 #region 工具方法
+func set_font_size(size : int, texture_label : RichTextLabel) -> void:
+	texture_label.add_theme_font_size_override("normal_font_size", size)
+	texture_label.add_theme_font_size_override("bold_font_size", size)
+	texture_label.add_theme_font_size_override("italics_font_size", size)
+	texture_label.add_theme_font_size_override("bold_italics_font_size", size)
 
+# TODO_FUC 内容UI：标题语法
+func process_title(text : String, texture_label : RichTextLabel) -> String:
+	if not text.begins_with("#"): return text
+	if text.begins_with("##### "):
+		set_font_size(24, texture_label)
+		return text.erase(0, 6)
+	elif text.begins_with("#### "):
+		set_font_size(36, texture_label)
+		return text.erase(0, 5)
+	elif text.begins_with("### "):
+		set_font_size(48, texture_label)
+		return text.erase(0, 4)
+	elif text.begins_with("## "):
+		set_font_size(60, texture_label)
+		return text.erase(0, 3)
+	elif text.begins_with("# "):
+		set_font_size(72, texture_label)
+		return text.erase(0, 2)
+	return text
+
+func process_bold(text : String) -> String:
+	var bold_text : String = ""
+	var is_bold : bool = false
+	var star_number : int = 0
+
+	for char in text:
+		if char == "*":
+			star_number += 1
+			if star_number == 2 and is_bold:
+				bold_text += "[/b]"
+				is_bold = false
+			elif star_number == 2:
+				bold_text += "[b]"
+				is_bold = true
+			continue
+		else :
+			star_number = 0
+
+		bold_text += char
+		text = bold_text
+	return text
 #endregion
