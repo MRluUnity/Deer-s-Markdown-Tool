@@ -75,6 +75,7 @@ func _on_file_menu_button_id_pressed(id : int) -> void:
 		0:
 			print("新建")
 		1:
+			# WARNING 这里记得后面进行封装和优化
 			var file_dialog : FileDialog = FileDialog.new()
 			file_dialog.file_selected.connect(_on_file_dialog_file_selected)
 			file_dialog.canceled.connect(file_dialog.queue_free)
@@ -96,6 +97,7 @@ func _on_help_menu_button_id_pressed(id : int) -> void:
 		1:
 			print("快捷键说明")
 
+# TODO_FUC 文件对话框：文件选择信号
 func _on_file_dialog_file_selected(path : String) -> void:
 	var file : FileAccess = FileAccess.open(path, FileAccess.READ)
 	var file_text : String = file.get_as_text()
