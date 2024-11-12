@@ -45,7 +45,7 @@ func _unhandled_input(_event: InputEvent) -> void:
 # TODO 内容UI ===============>信号链接方法<===============
 #region 信号链接方法
 # TODO_FUC 头部UI：帮助菜单按钮：文字编辑器：id_pressed信号
-func _on_text_edit_lines_edited_from(from_line: int, to_line: int) -> void:
+func _on_text_edit_lines_edited_from(_from_line: int, _to_line: int) -> void:
 	var edit_texts : PackedStringArray = text_edit.text.split("\n")
 	var title_level : int = 0
 
@@ -54,17 +54,22 @@ func _on_text_edit_lines_edited_from(from_line: int, to_line: int) -> void:
 
 	for edit_text in edit_texts:
 		var chars : Array = edit_text.split("")
-		var texture_label : RichTextLabel = create_rich_text_label()
+		if chars.size() == 3 and chars[0] == "-" and chars[1] == "-" and chars[2] == "-":
+			var line_rect : ColorRect = ColorRect.new()
+			line_rect.custom_minimum_size.y = 4
+			context_text.add_child(line_rect)
+		else:
+			var texture_label : RichTextLabel = create_rich_text_label()
 
-		title_level = process_title(chars, texture_label)
+			title_level = process_title(chars, texture_label)
 
-		chars = process_b_and_i(chars)
+			chars = process_b_and_i(chars)
 
-		for char in chars:
-			texture_label.text += char
+			for c in chars:
+				texture_label.text += c
 
-		texture_label.text = texture_label.text.erase(0, title_level)
-		context_text.add_child(texture_label)
+			texture_label.text = texture_label.text.erase(0, title_level)
+			context_text.add_child(texture_label)
 #endregion
 
 # TODO 内容UI ===============>工具方法<===============
@@ -75,32 +80,33 @@ func create_rich_text_label() -> RichTextLabel:
 	texture_label.selection_enabled = true
 	texture_label.fit_content = true
 	texture_label.bbcode_enabled = true
+	set_font_size(24, texture_label)
 	return texture_label
 
 # TODO_FUC 内容UI：设置字体大小
-func set_font_size(size : int, texture_label : RichTextLabel) -> void:
-	texture_label.add_theme_font_size_override("normal_font_size", size)
-	texture_label.add_theme_font_size_override("bold_font_size", size)
-	texture_label.add_theme_font_size_override("italics_font_size", size)
-	texture_label.add_theme_font_size_override("bold_italics_font_size", size)
+func set_font_size(font_size : int, texture_label : RichTextLabel) -> void:
+	texture_label.add_theme_font_size_override("normal_font_size", font_size)
+	texture_label.add_theme_font_size_override("bold_font_size", font_size)
+	texture_label.add_theme_font_size_override("italics_font_size", font_size)
+	texture_label.add_theme_font_size_override("bold_italics_font_size", font_size)
 
 # TODO_FUC 内容UI：标题语法处理
 func process_title(chars : Array, texture_label : RichTextLabel) -> int:
 	match chars:
 		["#", "#", "#", "#", "#", " ", ..]:
-			set_font_size(24, texture_label)
+			set_font_size(32, texture_label)
 			return 6
 		["#", "#", "#", "#", " ",..]:
-			set_font_size(36, texture_label)
+			set_font_size(40, texture_label)
 			return 5
 		["#", "#", "#", " ",..]:
 			set_font_size(48, texture_label)
 			return 4
 		["#", "#", " ", ..]:
-			set_font_size(60, texture_label)
+			set_font_size(56, texture_label)
 			return 3
 		["#", " ", ..]:
-			set_font_size(72, texture_label)
+			set_font_size(64, texture_label)
 			return 2
 	return 0
 

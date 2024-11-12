@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://41rckbrcarwp"]
+[gd_scene load_steps=6 format=3 uid="uid://41rckbrcarwp"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_4k8lh"]
 [ext_resource type="Script" path="res://scenes/header_panel_container.gd" id="2_rh7kv"]
@@ -6,6 +6,12 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mmuo8"]
 bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_awym6"]
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_4k8lh")
@@ -93,10 +99,13 @@ layout_mode = 2
 
 [node name="HSplitContainer" type="HSplitContainer" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer"]
 layout_mode = 2
+split_offset = -600
 
 [node name="SliderPanelContainer" type="PanelContainer" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer"]
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
-size_flags_horizontal = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_awym6")
 
 [node name="ContextPanelContainer" type="PanelContainer" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer"]
 layout_mode = 2
@@ -107,18 +116,21 @@ script = ExtResource("3_r0l5q")
 layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/MarginContainer"]
+visible = false
 layout_mode = 2
 
 [node name="TextEdit" type="TextEdit" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/MarginContainer/HBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(800, 0)
+custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
+size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 24
 
 [node name="ContextText" type="VBoxContainer" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/MarginContainer/HBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(800, 0)
+custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="UI_EX" type="CanvasLayer" parent="."]
 
