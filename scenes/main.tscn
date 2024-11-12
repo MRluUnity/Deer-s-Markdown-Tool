@@ -113,17 +113,12 @@ layout_mode = 2
 unique_name_in_owner = true
 custom_minimum_size = Vector2(800, 0)
 layout_mode = 2
+theme_override_font_sizes/font_size = 24
 
 [node name="ContextText" type="VBoxContainer" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/MarginContainer/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(800, 0)
 layout_mode = 2
-
-[node name="RichTextLabel" type="RichTextLabel" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/MarginContainer/HBoxContainer/ContextText"]
-custom_minimum_size = Vector2(0, 340)
-layout_mode = 2
-bbcode_enabled = true
-text = "[b]asdasd[/b]"
 
 [node name="UI_EX" type="CanvasLayer" parent="."]
 

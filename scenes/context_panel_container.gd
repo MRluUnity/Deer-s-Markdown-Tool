@@ -19,7 +19,6 @@ class_name ContextPanelContainer extends PanelContainer
 #region 变量
 @onready var text_edit: TextEdit = %TextEdit
 @onready var context_text: VBoxContainer = %ContextText
-
 #endregion
 
 # TODO 内容UI ===============>虚方法<===============
@@ -48,70 +47,86 @@ func _unhandled_input(_event: InputEvent) -> void:
 # TODO_FUC 头部UI：帮助菜单按钮：文字编辑器：id_pressed信号
 func _on_text_edit_lines_edited_from(from_line: int, to_line: int) -> void:
 	var edit_texts : PackedStringArray = text_edit.text.split("\n")
+	var title_level : int = 0
+
 	for i in context_text.get_children():
 		i.queue_free()
 
-	for i in edit_texts:
-		var texture_label : RichTextLabel = RichTextLabel.new()
-		var text : String = i
+	for edit_text in edit_texts:
+		var chars : Array = edit_text.split("")
+		var texture_label : RichTextLabel = create_rich_text_label()
 
-		text = process_title(i, texture_label)
+		title_level = process_title(chars, texture_label)
 
-		text = process_bold(text)
+		chars = process_b_and_i(chars)
 
+		for char in chars:
+			texture_label.text += char
+
+		texture_label.text = texture_label.text.erase(0, title_level)
 		context_text.add_child(texture_label)
-		texture_label.fit_content = true
-		texture_label.bbcode_enabled = true
-		texture_label.text = text
 #endregion
 
 # TODO 内容UI ===============>工具方法<===============
 #region 工具方法
+# TODO_FUC 内容UI：初始化RichTextLabel
+func create_rich_text_label() -> RichTextLabel:
+	var texture_label : RichTextLabel = RichTextLabel.new()
+	texture_label.selection_enabled = true
+	texture_label.fit_content = true
+	texture_label.bbcode_enabled = true
+	return texture_label
+
+# TODO_FUC 内容UI：设置字体大小
 func set_font_size(size : int, texture_label : RichTextLabel) -> void:
 	texture_label.add_theme_font_size_override("normal_font_size", size)
 	texture_label.add_theme_font_size_override("bold_font_size", size)
 	texture_label.add_theme_font_size_override("italics_font_size", size)
 	texture_label.add_theme_font_size_override("bold_italics_font_size", size)
 
-# TODO_FUC 内容UI：标题语法
-func process_title(text : String, texture_label : RichTextLabel) -> String:
-	if not text.begins_with("#"): return text
-	if text.begins_with("##### "):
-		set_font_size(24, texture_label)
-		return text.erase(0, 6)
-	elif text.begins_with("#### "):
-		set_font_size(36, texture_label)
-		return text.erase(0, 5)
-	elif text.begins_with("### "):
-		set_font_size(48, texture_label)
-		return text.erase(0, 4)
-	elif text.begins_with("## "):
-		set_font_size(60, texture_label)
-		return text.erase(0, 3)
-	elif text.begins_with("# "):
-		set_font_size(72, texture_label)
-		return text.erase(0, 2)
-	return text
+# TODO_FUC 内容UI：标题语法处理
+func process_title(chars : Array, texture_label : RichTextLabel) -> int:
+	match chars:
+		["#", "#", "#", "#", "#", " ", ..]:
+			set_font_size(24, texture_label)
+			return 6
+		["#", "#", "#", "#", " ",..]:
+			set_font_size(36, texture_label)
+			return 5
+		["#", "#", "#", " ",..]:
+			set_font_size(48, texture_label)
+			return 4
+		["#", "#", " ", ..]:
+			set_font_size(60, texture_label)
+			return 3
+		["#", " ", ..]:
+			set_font_size(72, texture_label)
+			return 2
+	return 0
 
-func process_bold(text : String) -> String:
-	var bold_text : String = ""
-	var is_bold : bool = false
-	var star_number : int = 0
+# TODO_FUC 内容UI：粗体、斜体语法处理
+func process_b_and_i(chars : Array) -> Array:
+	if chars[chars.find("*")] == "*" and chars[chars.rfind("*")] == "*":
+		# 判断是否满足加粗
+		if chars.size() > chars.find("*") + 1 \
+		and chars[chars.find("*") + 1] == "*" \
+		and chars[chars.rfind("*") - 1] == "*" \
+		and chars.rfind("*") != chars.find("*") + 1 \
+		and chars.rfind("*") - 1 != chars.find("*"):
+			chars.pop_at(chars.find("*"))
+			chars[chars.find("*")] = "**"
+			chars.pop_at(chars.rfind("*",) - 1)
+			chars[chars.rfind("*")] = "**"
 
-	for char in text:
-		if char == "*":
-			star_number += 1
-			if star_number == 2 and is_bold:
-				bold_text += "[/b]"
-				is_bold = false
-			elif star_number == 2:
-				bold_text += "[b]"
-				is_bold = true
-			continue
-		else :
-			star_number = 0
+			# 加粗处理
+			if chars.find("**") != -1:
+				chars[chars.find("**")] = "[b]"
+			if chars.rfind("**") != -1:
+				chars[chars.rfind("**")] = "[/b]"
 
-		bold_text += char
-		text = bold_text
-	return text
+		# 斜体处理
+		if chars.find("*") != chars.rfind("*"):
+			chars[chars.find("*")] = "[i]"
+			chars[chars.rfind("*")] = "[/i]"
+	return chars
 #endregion
