@@ -21,6 +21,9 @@ class_name HeaderPanelContainer extends PanelContainer
 @onready var file_menu_button: MenuButton = %FileMenuButton
 # 帮助菜单按钮
 @onready var help_menu_button: MenuButton = %HelpMenuButton
+
+@onready var context_h_box_container: HBoxContainer = %ContextHBoxContainer
+@onready var context_panel_container: ContextPanelContainer = %ContextPanelContainer
 #endregion
 
 # TODO 头部UI ===============>虚方法<===============
@@ -72,7 +75,16 @@ func _on_file_menu_button_id_pressed(id : int) -> void:
 		0:
 			print("新建")
 		1:
-			print("打开")
+			var file_dialog : FileDialog = FileDialog.new()
+			file_dialog.file_selected.connect(_on_file_dialog_file_selected)
+			file_dialog.canceled.connect(file_dialog.queue_free)
+			file_dialog.confirmed.connect(file_dialog.queue_free)
+			file_dialog.min_size = Vector2(500, 500)
+			file_dialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE
+			file_dialog.access = FileDialog.ACCESS_FILESYSTEM
+			file_dialog.initial_position = Window.WINDOW_INITIAL_POSITION_CENTER_MAIN_WINDOW_SCREEN
+			file_dialog.show()
+			add_child(file_dialog)
 		2:
 			get_tree().quit()
 
@@ -83,6 +95,13 @@ func _on_help_menu_button_id_pressed(id : int) -> void:
 			print("基本操作说明")
 		1:
 			print("快捷键说明")
+
+func _on_file_dialog_file_selected(path : String) -> void:
+	var file : FileAccess = FileAccess.open(path, FileAccess.READ)
+	var file_text : String = file.get_as_text()
+	context_panel_container.current_file_path = path
+	context_h_box_container.show()
+	context_panel_container.text_edit.text = file_text
 #endregion
 
 # TODO 头部UI ===============>工具方法<===============

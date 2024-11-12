@@ -108,6 +108,7 @@ size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_awym6")
 
 [node name="ContextPanelContainer" type="PanelContainer" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("3_r0l5q")
@@ -115,18 +116,19 @@ script = ExtResource("3_r0l5q")
 [node name="MarginContainer" type="MarginContainer" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/MarginContainer"]
+[node name="ContextHBoxContainer" type="HBoxContainer" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/MarginContainer"]
+unique_name_in_owner = true
 visible = false
 layout_mode = 2
 
-[node name="TextEdit" type="TextEdit" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/MarginContainer/HBoxContainer"]
+[node name="TextEdit" type="TextEdit" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/MarginContainer/ContextHBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 24
 
-[node name="ContextText" type="VBoxContainer" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/MarginContainer/HBoxContainer"]
+[node name="ContextText" type="VBoxContainer" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/MarginContainer/ContextHBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
@@ -140,4 +142,4 @@ size_flags_horizontal = 3
 [connection signal="pressed" from="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer/MarginContainer/HBoxContainer/FileMenuButton" to="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer" method="_on_file_menu_button_pressed"]
 [connection signal="about_to_popup" from="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer/MarginContainer/HBoxContainer/HelpMenuButton" to="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer" method="_on_help_menu_button_about_to_popup"]
 [connection signal="pressed" from="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer/MarginContainer/HBoxContainer/HelpMenuButton" to="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer" method="_on_help_menu_button_pressed"]
-[connection signal="lines_edited_from" from="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/MarginContainer/HBoxContainer/TextEdit" to="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer" method="_on_text_edit_lines_edited_from"]
+[connection signal="lines_edited_from" from="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/MarginContainer/ContextHBoxContainer/TextEdit" to="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer" method="_on_text_edit_lines_edited_from"]

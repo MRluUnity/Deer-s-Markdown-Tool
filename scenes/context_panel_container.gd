@@ -19,6 +19,7 @@ class_name ContextPanelContainer extends PanelContainer
 #region 变量
 @onready var text_edit: TextEdit = %TextEdit
 @onready var context_text: VBoxContainer = %ContextText
+var current_file_path : String
 #endregion
 
 # TODO 内容UI ===============>虚方法<===============
@@ -35,8 +36,12 @@ func _process(_delta: float) -> void:
 func _physics_process(_delta: float) -> void:
 	pass
 
-func _input(_event: InputEvent) -> void:
-	pass
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey:
+		if event.is_action_pressed("save"):
+			var file : FileAccess = FileAccess.open(current_file_path, FileAccess.WRITE)
+			file.store_string(text_edit.text)
+			file.close()
 
 func _unhandled_input(_event: InputEvent) -> void:
 	pass
@@ -54,10 +59,14 @@ func _on_text_edit_lines_edited_from(_from_line: int, _to_line: int) -> void:
 
 	for edit_text in edit_texts:
 		var chars : Array = edit_text.split("")
+
+		# 分割线语法
 		if chars.size() == 3 and chars[0] == "-" and chars[1] == "-" and chars[2] == "-":
 			var line_rect : ColorRect = ColorRect.new()
 			line_rect.custom_minimum_size.y = 4
 			context_text.add_child(line_rect)
+
+		# 文字语法
 		else:
 			var texture_label : RichTextLabel = create_rich_text_label()
 
