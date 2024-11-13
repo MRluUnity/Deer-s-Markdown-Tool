@@ -74,6 +74,8 @@ func _on_text_edit_lines_edited_from(_from_line: int, _to_line: int) -> void:
 
 			chars = process_b_and_i(chars)
 
+			chars = process_list(chars)
+
 			for c in chars:
 				texture_label.text += c
 
@@ -143,5 +145,19 @@ func process_b_and_i(chars : Array) -> Array:
 		if chars.find("*") != chars.rfind("*"):
 			chars[chars.find("*")] = "[i]"
 			chars[chars.rfind("*")] = "[/i]"
+	return chars
+
+# TODO_FUC 内容UI：有序无序列表语法处理
+func process_list(chars : Array) -> Array:
+	match chars:
+		# 有序列表
+		[var frist, ".", " ", ..]:
+			if frist.is_valid_int():
+				chars.push_front("	")
+		# 无序列表
+		["-", " ", ..]:
+			chars.pop_front()
+			chars.push_front(" [b]·[/b] ")
+			chars.push_front("	")
 	return chars
 #endregion

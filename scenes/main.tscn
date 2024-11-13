@@ -118,7 +118,6 @@ layout_mode = 2
 
 [node name="ContextHBoxContainer" type="HBoxContainer" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/MarginContainer"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 
 [node name="TextEdit" type="TextEdit" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/MarginContainer/ContextHBoxContainer"]
@@ -133,6 +132,12 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/MarginContainer/ContextHBoxContainer/ContextText"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+bbcode_enabled = true
+text = "[ul][/ul]"
 
 [node name="UI_EX" type="CanvasLayer" parent="."]
 
