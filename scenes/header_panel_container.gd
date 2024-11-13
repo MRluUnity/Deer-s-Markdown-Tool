@@ -21,8 +21,7 @@ class_name HeaderPanelContainer extends PanelContainer
 @onready var file_menu_button: MenuButton = %FileMenuButton
 # 帮助菜单按钮
 @onready var help_menu_button: MenuButton = %HelpMenuButton
-
-@onready var context_h_box_container: HBoxContainer = %ContextHBoxContainer
+# 内容面板
 @onready var context_panel_container: ContextPanelContainer = %ContextPanelContainer
 #endregion
 
@@ -50,14 +49,6 @@ func _unhandled_input(_event: InputEvent) -> void:
 
 # TODO 头部UI ===============>信号链接方法<===============
 #region 信号链接方法
-# TODO_FUC 头部UI：文件菜单按钮：Pressed信号
-func _on_file_menu_button_pressed() -> void:
-	pass
-
-# TODO_FUC 头部UI：帮助菜单按钮：Pressed信号
-func _on_help_menu_button_pressed() -> void:
-	pass
-
 # TODO_FUC 头部UI：文件菜单按钮：about_to_popup信号
 func _on_file_menu_button_about_to_popup() -> void:
 	await get_tree().process_frame
@@ -88,6 +79,8 @@ func _on_file_menu_button_id_pressed(id : int) -> void:
 			add_child(file_dialog)
 		2:
 			get_tree().quit()
+		3:
+			print("打开文件夹")
 
 # TODO_FUC 头部UI：帮助菜单按钮：弹出界面：id_pressed信号
 func _on_help_menu_button_id_pressed(id : int) -> void:
@@ -102,7 +95,7 @@ func _on_file_dialog_file_selected(path : String) -> void:
 	var file : FileAccess = FileAccess.open(path, FileAccess.READ)
 	var file_text : String = file.get_as_text()
 	context_panel_container.current_file_path = path
-	context_h_box_container.show()
+	context_panel_container.context_h_box_container.show()
 	context_panel_container.text_edit.text = file_text
 #endregion
 

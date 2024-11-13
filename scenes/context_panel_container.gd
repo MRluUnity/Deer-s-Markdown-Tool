@@ -19,6 +19,7 @@ class_name ContextPanelContainer extends PanelContainer
 #region 变量
 @onready var text_edit: TextEdit = %TextEdit
 @onready var context_text: VBoxContainer = %ContextText
+@onready var context_h_box_container: HBoxContainer = %ContextHBoxContainer
 var current_file_path : String
 #endregion
 
@@ -81,6 +82,12 @@ func _on_text_edit_lines_edited_from(_from_line: int, _to_line: int) -> void:
 
 			texture_label.text = texture_label.text.erase(0, title_level)
 			context_text.add_child(texture_label)
+
+func _on_close_file_button_pressed() -> void:
+	var file : FileAccess = FileAccess.open(current_file_path, FileAccess.WRITE)
+	file.store_string(text_edit.text)
+	file.close()
+	context_h_box_container.hide()
 #endregion
 
 # TODO 内容UI ===============>工具方法<===============

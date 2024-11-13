@@ -63,14 +63,18 @@ theme_override_colors/font_pressed_color = Color(0.525101, 0.525101, 0.525101, 1
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 text = "文件"
 switch_on_hover = true
-item_count = 4
-popup/item_0/text = "新建"
-popup/item_1/text = "打开"
+item_count = 6
+popup/item_0/text = "新建文件"
+popup/item_1/text = "打开文件"
 popup/item_1/id = 1
-popup/item_2/id = 3
+popup/item_2/id = 5
 popup/item_2/separator = true
-popup/item_3/text = "退出"
-popup/item_3/id = 2
+popup/item_3/text = "打开文件夹"
+popup/item_3/id = 3
+popup/item_4/id = 5
+popup/item_4/separator = true
+popup/item_5/text = "退出"
+popup/item_5/id = 2
 
 [node name="HelpMenuButton" type="MenuButton" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer/MarginContainer/HBoxContainer"]
 unique_name_in_owner = true
@@ -133,18 +137,18 @@ custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="RichTextLabel" type="RichTextLabel" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/MarginContainer/ContextHBoxContainer/ContextText"]
-custom_minimum_size = Vector2(0, 30)
+[node name="CloseFileButton" type="Button" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer"]
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
-bbcode_enabled = true
-text = "[ul][/ul]"
+size_flags_horizontal = 10
+size_flags_vertical = 0
+text = "X"
 
 [node name="UI_EX" type="CanvasLayer" parent="."]
 
 [node name="UI_Window" type="Node2D" parent="."]
 
 [connection signal="about_to_popup" from="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer/MarginContainer/HBoxContainer/FileMenuButton" to="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer" method="_on_file_menu_button_about_to_popup"]
-[connection signal="pressed" from="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer/MarginContainer/HBoxContainer/FileMenuButton" to="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer" method="_on_file_menu_button_pressed"]
 [connection signal="about_to_popup" from="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer/MarginContainer/HBoxContainer/HelpMenuButton" to="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer" method="_on_help_menu_button_about_to_popup"]
-[connection signal="pressed" from="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer/MarginContainer/HBoxContainer/HelpMenuButton" to="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer" method="_on_help_menu_button_pressed"]
 [connection signal="lines_edited_from" from="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/MarginContainer/ContextHBoxContainer/TextEdit" to="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer" method="_on_text_edit_lines_edited_from"]
+[connection signal="pressed" from="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/CloseFileButton" to="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer" method="_on_close_file_button_pressed"]
