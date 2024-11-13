@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://41rckbrcarwp"]
+[gd_scene load_steps=11 format=3 uid="uid://41rckbrcarwp"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_4k8lh"]
 [ext_resource type="Script" path="res://scenes/header_panel_container.gd" id="2_rh7kv"]
+[ext_resource type="Script" path="res://scenes/slider_panel_container.gd" id="3_j15lt"]
 [ext_resource type="Script" path="res://scenes/context_panel_container.gd" id="3_r0l5q"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mmuo8"]
@@ -12,6 +13,51 @@ corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p1ovg"]
+bg_color = Color(0, 0, 0, 0.588235)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.332881, 0.332881, 0.33288, 1)
+corner_radius_top_left = 64
+corner_radius_top_right = 64
+corner_radius_bottom_right = 64
+corner_radius_bottom_left = 65
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ulhyx"]
+bg_color = Color(0.184314, 0.184314, 0.184314, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 64
+corner_radius_top_right = 64
+corner_radius_bottom_right = 64
+corner_radius_bottom_left = 65
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mgsee"]
+bg_color = Color(0.184314, 0.184314, 0.184314, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 64
+corner_radius_top_right = 64
+corner_radius_bottom_right = 64
+corner_radius_bottom_left = 65
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g8bux"]
+bg_color = Color(0.18359, 0.18359, 0.18359, 0.784314)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 64
+corner_radius_top_right = 64
+corner_radius_bottom_right = 64
+corner_radius_bottom_left = 65
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_4k8lh")
@@ -106,10 +152,23 @@ layout_mode = 2
 split_offset = -600
 
 [node name="SliderPanelContainer" type="PanelContainer" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_awym6")
+script = ExtResource("3_j15lt")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/SliderPanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 8
+
+[node name="SliderVBoxContainer" type="VBoxContainer" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/SliderPanelContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
 
 [node name="ContextPanelContainer" type="PanelContainer" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer"]
 unique_name_in_owner = true
@@ -136,13 +195,26 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 size_flags_horizontal = 3
+focus_mode = 2
+
+[node name="Label" type="Label" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/MarginContainer/ContextHBoxContainer"]
+layout_mode = 2
 
 [node name="CloseFileButton" type="Button" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 0
+focus_mode = 0
+theme_override_styles/disabled = SubResource("StyleBoxFlat_p1ovg")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_ulhyx")
+theme_override_styles/hover = SubResource("StyleBoxFlat_p1ovg")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_mgsee")
+theme_override_styles/normal = SubResource("StyleBoxFlat_g8bux")
+disabled = true
 text = "X"
+icon_alignment = 1
 
 [node name="UI_EX" type="CanvasLayer" parent="."]
 
@@ -150,5 +222,5 @@ text = "X"
 
 [connection signal="about_to_popup" from="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer/MarginContainer/HBoxContainer/FileMenuButton" to="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer" method="_on_file_menu_button_about_to_popup"]
 [connection signal="about_to_popup" from="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer/MarginContainer/HBoxContainer/HelpMenuButton" to="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer" method="_on_help_menu_button_about_to_popup"]
-[connection signal="lines_edited_from" from="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/MarginContainer/ContextHBoxContainer/TextEdit" to="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer" method="_on_text_edit_lines_edited_from"]
+[connection signal="text_changed" from="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/MarginContainer/ContextHBoxContainer/TextEdit" to="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer" method="_on_text_edit_text_changed"]
 [connection signal="pressed" from="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/CloseFileButton" to="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer" method="_on_close_file_button_pressed"]

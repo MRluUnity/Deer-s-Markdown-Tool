@@ -23,6 +23,8 @@ class_name HeaderPanelContainer extends PanelContainer
 @onready var help_menu_button: MenuButton = %HelpMenuButton
 # 内容面板
 @onready var context_panel_container: ContextPanelContainer = %ContextPanelContainer
+# 侧边栏面板
+@onready var slider_panel_container: SliderPanelContainer = %SliderPanelContainer
 #endregion
 
 # TODO 头部UI ===============>虚方法<===============
@@ -80,7 +82,16 @@ func _on_file_menu_button_id_pressed(id : int) -> void:
 		2:
 			get_tree().quit()
 		3:
-			print("打开文件夹")
+			var file_dialog : FileDialog = FileDialog.new()
+			file_dialog.dir_selected.connect(_on_file_dialog_dir_selected)
+			file_dialog.canceled.connect(file_dialog.queue_free)
+			file_dialog.confirmed.connect(file_dialog.queue_free)
+			file_dialog.min_size = Vector2(500, 500)
+			file_dialog.file_mode = FileDialog.FILE_MODE_OPEN_DIR
+			file_dialog.access = FileDialog.ACCESS_FILESYSTEM
+			file_dialog.initial_position = Window.WINDOW_INITIAL_POSITION_CENTER_MAIN_WINDOW_SCREEN
+			file_dialog.show()
+			add_child(file_dialog)
 
 # TODO_FUC 头部UI：帮助菜单按钮：弹出界面：id_pressed信号
 func _on_help_menu_button_id_pressed(id : int) -> void:
@@ -97,6 +108,14 @@ func _on_file_dialog_file_selected(path : String) -> void:
 	context_panel_container.current_file_path = path
 	context_panel_container.context_h_box_container.show()
 	context_panel_container.text_edit.text = file_text
+	context_panel_container.text_edit.text_changed.emit()
+
+func _on_file_dialog_dir_selected(dir : String) -> void:
+	var dir_access = DirAccess.open(dir)
+	var dir_files : Array = dir_access.get_files()
+	slider_panel_container.dir_files = dir_files
+	slider_panel_container.current_dir = dir
+	print(dir_files)
 #endregion
 
 # TODO 头部UI ===============>工具方法<===============

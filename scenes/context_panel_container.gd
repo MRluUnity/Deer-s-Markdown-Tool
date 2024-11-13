@@ -17,10 +17,22 @@ class_name ContextPanelContainer extends PanelContainer
 
 # TODO 内容UI ===============>变 量<===============
 #region 变量
+# 关闭文件按钮
+@onready var close_file_button: Button = %CloseFileButton
+# 文字编辑器
 @onready var text_edit: TextEdit = %TextEdit
+# 内容显示容器
 @onready var context_text: VBoxContainer = %ContextText
+# 内容的Hbox容器
 @onready var context_h_box_container: HBoxContainer = %ContextHBoxContainer
-var current_file_path : String
+# 当前文件路径
+var current_file_path : String = "":
+	set(v):
+		current_file_path = v
+		if current_file_path != "":
+			close_file_button.disabled = false
+		else :
+			close_file_button.disabled = true
 #endregion
 
 # TODO 内容UI ===============>虚方法<===============
@@ -50,8 +62,8 @@ func _unhandled_input(_event: InputEvent) -> void:
 
 # TODO 内容UI ===============>信号链接方法<===============
 #region 信号链接方法
-# TODO_FUC 头部UI：帮助菜单按钮：文字编辑器：id_pressed信号
-func _on_text_edit_lines_edited_from(_from_line: int, _to_line: int) -> void:
+# TODO_FUC 内容UI：文字编辑器：text_changed 方法
+func _on_text_edit_text_changed() -> void:
 	var edit_texts : PackedStringArray = text_edit.text.split("\n")
 	var title_level : int = 0
 
@@ -63,9 +75,7 @@ func _on_text_edit_lines_edited_from(_from_line: int, _to_line: int) -> void:
 
 		# 分割线语法
 		if chars.size() == 3 and chars[0] == "-" and chars[1] == "-" and chars[2] == "-":
-			var line_rect : ColorRect = ColorRect.new()
-			line_rect.custom_minimum_size.y = 4
-			context_text.add_child(line_rect)
+			create_line()
 
 		# 文字语法
 		else:
@@ -83,21 +93,35 @@ func _on_text_edit_lines_edited_from(_from_line: int, _to_line: int) -> void:
 			texture_label.text = texture_label.text.erase(0, title_level)
 			context_text.add_child(texture_label)
 
+# 内容UI：关闭文件按钮：pressed信号
 func _on_close_file_button_pressed() -> void:
 	var file : FileAccess = FileAccess.open(current_file_path, FileAccess.WRITE)
 	file.store_string(text_edit.text)
 	file.close()
+	current_file_path = ""
 	context_h_box_container.hide()
 #endregion
 
 # TODO 内容UI ===============>工具方法<===============
 #region 工具方法
+# TODO_FUC 内容UI：初始化 Line
+func create_line() -> void:
+	var line_rect : ColorRect = ColorRect.new()
+	line_rect.custom_minimum_size.y = 2
+
+	var texture_label_start : RichTextLabel = create_rich_text_label()
+	var texture_label_end : RichTextLabel = create_rich_text_label()
+	context_text.add_child(texture_label_start)
+	context_text.add_child(line_rect)
+	context_text.add_child(texture_label_end)
+
 # TODO_FUC 内容UI：初始化RichTextLabel
 func create_rich_text_label() -> RichTextLabel:
 	var texture_label : RichTextLabel = RichTextLabel.new()
 	texture_label.selection_enabled = true
 	texture_label.fit_content = true
 	texture_label.bbcode_enabled = true
+	texture_label.custom_minimum_size.y = 24
 	set_font_size(24, texture_label)
 	return texture_label
 
