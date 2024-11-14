@@ -179,25 +179,43 @@ script = ExtResource("3_r0l5q")
 [node name="MarginContainer" type="MarginContainer" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer"]
 layout_mode = 2
 
-[node name="ContextHBoxContainer" type="HBoxContainer" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/MarginContainer"]
+[node name="ContextHSplitContainer" type="HSplitContainer" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/MarginContainer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 
-[node name="TextEdit" type="TextEdit" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/MarginContainer/ContextHBoxContainer"]
+[node name="TextEditScrollContainer" type="ScrollContainer" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/MarginContainer/ContextHSplitContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 size_flags_horizontal = 3
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+
+[node name="TextEdit" type="TextEdit" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/MarginContainer/ContextHSplitContainer/TextEditScrollContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_font_sizes/font_size = 24
+wrap_mode = 1
 
-[node name="ContextText" type="VBoxContainer" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/MarginContainer/ContextHBoxContainer"]
+[node name="ContextTextScrollContainer" type="ScrollContainer" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/MarginContainer/ContextHSplitContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 size_flags_horizontal = 3
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+
+[node name="ContextText" type="VBoxContainer" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/MarginContainer/ContextHSplitContainer/ContextTextScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 focus_mode = 2
 
-[node name="Label" type="Label" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/MarginContainer/ContextHBoxContainer"]
+[node name="Label" type="Label" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/MarginContainer/ContextHSplitContainer"]
 layout_mode = 2
 
 [node name="CloseFileButton" type="Button" parent="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer"]
@@ -222,5 +240,5 @@ icon_alignment = 1
 
 [connection signal="about_to_popup" from="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer/MarginContainer/HBoxContainer/FileMenuButton" to="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer" method="_on_file_menu_button_about_to_popup"]
 [connection signal="about_to_popup" from="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer/MarginContainer/HBoxContainer/HelpMenuButton" to="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/HeaderPanelContainer" method="_on_help_menu_button_about_to_popup"]
-[connection signal="text_changed" from="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/MarginContainer/ContextHBoxContainer/TextEdit" to="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer" method="_on_text_edit_text_changed"]
+[connection signal="text_changed" from="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/MarginContainer/ContextHSplitContainer/TextEditScrollContainer/TextEdit" to="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer" method="_on_text_edit_text_changed"]
 [connection signal="pressed" from="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer/CloseFileButton" to="UI/PanelContainer/MarginContainer/PanelContainer/MainLayoutContainer/MainPanelContainer/MarginContainer/HSplitContainer/ContextPanelContainer" method="_on_close_file_button_pressed"]

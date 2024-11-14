@@ -23,8 +23,10 @@ class_name ContextPanelContainer extends PanelContainer
 @onready var text_edit: TextEdit = %TextEdit
 # 内容显示容器
 @onready var context_text: VBoxContainer = %ContextText
-# 内容的Hbox容器
-@onready var context_h_box_container: HBoxContainer = %ContextHBoxContainer
+# 内容分割容器
+@onready var context_h_split_container: HSplitContainer = %ContextHSplitContainer
+# 主要text显示区域
+@onready var context_text_scroll_container: ScrollContainer = %ContextTextScrollContainer
 # 当前文件路径
 var current_file_path : String = "":
 	set(v):
@@ -99,7 +101,7 @@ func _on_close_file_button_pressed() -> void:
 	file.store_string(text_edit.text)
 	file.close()
 	current_file_path = ""
-	context_h_box_container.hide()
+	context_h_split_container.hide()
 #endregion
 
 # TODO 内容UI ===============>工具方法<===============

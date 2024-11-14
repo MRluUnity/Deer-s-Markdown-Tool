@@ -106,7 +106,7 @@ func _on_file_dialog_file_selected(path : String) -> void:
 	var file : FileAccess = FileAccess.open(path, FileAccess.READ)
 	var file_text : String = file.get_as_text()
 	context_panel_container.current_file_path = path
-	context_panel_container.context_h_box_container.show()
+	context_panel_container.context_h_split_container.show()
 	context_panel_container.text_edit.text = file_text
 	context_panel_container.text_edit.text_changed.emit()
 
