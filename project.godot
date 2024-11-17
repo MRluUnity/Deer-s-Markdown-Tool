@@ -17,6 +17,10 @@ run/enable_alt_space_menu=true
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+PinYin="*res://scripts/pin_yin_model/pin_yin.gd"
+
 [display]
 
 window/size/viewport_width=1920

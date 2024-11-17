@@ -110,12 +110,12 @@ func _on_file_dialog_file_selected(path : String) -> void:
 	context_panel_container.text_edit.text = file_text
 	context_panel_container.text_edit.text_changed.emit()
 
+# TODO_FUC 文件对话框：文件夹选择信号
 func _on_file_dialog_dir_selected(dir : String) -> void:
 	var dir_access = DirAccess.open(dir)
 	var dir_files : Array = dir_access.get_files()
 	slider_panel_container.dir_files = dir_files
 	slider_panel_container.current_dir = dir
-	print(dir_files)
 #endregion
 
 # TODO 头部UI ===============>工具方法<===============

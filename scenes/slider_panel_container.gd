@@ -17,15 +17,17 @@ class_name SliderPanelContainer extends PanelContainer
 
 # TODO 侧边栏UI ===============>变 量<===============
 #region 变量
+# 侧边栏UI：侧边栏VBox容器
 @onready var slider_v_box_container: VBoxContainer = %SliderVBoxContainer
+# 内容UI：内容容器
 @onready var context_panel_container: ContextPanelContainer = %ContextPanelContainer
-
+# 当前的文件夹地址
 var current_dir : String = "":
 	set(v):
 		current_dir = v
 		if current_dir != "":
 			create_slider_item()
-
+# 文件夹中的文件列表
 var dir_files : Array
 #endregion
 
@@ -70,11 +72,9 @@ func create_slider_item() -> void:
 
 	for i in dir_files:
 		var button : Button = Button.new()
-		button.focus_mode = Control.FOCUS_NONE
-		button.text = i
-		# 按下的是第几个按钮
-		button.pressed.connect(func():
-			var file_name = slider_v_box_container.get_child(get_index() + 1).text
+		# 按钮按下的信号方法
+		var button_pressed : Callable = func():
+			var file_name = slider_v_box_container.get_child(button.get_index()).text
 			if context_panel_container.current_file_path != (current_dir + "/" + file_name):
 				context_panel_container.current_file_path = (current_dir + "/" + file_name)
 				var file : FileAccess = FileAccess.open(context_panel_container.current_file_path, FileAccess.READ)
@@ -82,6 +82,9 @@ func create_slider_item() -> void:
 				context_panel_container.context_h_split_container.show()
 				context_panel_container.text_edit.text = file_text
 				context_panel_container.text_edit.text_changed.emit()
-			)
+
+		button.focus_mode = Control.FOCUS_NONE
+		button.text = i
+		button.pressed.connect(button_pressed)
 		slider_v_box_container.add_child(button)
 #endregion
